@@ -1,4 +1,29 @@
 // geojson with three features. two have value "parking" for property "parking" and one has value "stadium"
+
+// colors 
+// #ffffcc
+// #c7e9b4 greater than -10, less than 10
+// #7fcdbb greater than or equal to 10, less than 30
+// #41b6c4 greater than or equal to 30, less than 50
+// #1d91c0 greater than or equal to 50, less than 70
+// #225ea8 greater than or equal to 70, less than 90
+// #0c2c84 greater than 90
+
+
+// d 
+// d >= 90 #0c2c84
+
+function getColor(d) {
+  return d > 91 ? '#ffffcc' :
+         d > 90  ? '#c7e9b4' :
+         d > 70  ? '#7fcdbb' :
+         d > 50  ? '#41b6c4' :
+         d > 30   ? '#1d91c0' :
+         d > 10   ? '#225ea8' :
+                    '#FFEDA0';
+}
+
+
 var locations = [{
   "type": "Feature",
   "properties": {
@@ -112,8 +137,8 @@ var locations = [{
   "geometry": {
   "type": "Point",
   "coordinates": [
-  -121.6395,
-  37.267,
+  -119.58723,
+  37.748837,
   7.66
   ]
   },
@@ -161,6 +186,28 @@ var locations = [{
   }
   ]
 
+  function markerSize(mag) {
+    return mag;
+  }
+
+console.log(locations[0].properties.mag)
+
+console.log(locations[0].geometry.coordinates[2])
+
+thirdMarkers = []
+
+for (var i = 0; i < locations.length; i++) {
+  thirdMarkers.push(
+    L.circle(locations[i].coordinates, {
+      stroke: false,
+      fillOpacity: .075,
+      color: "green",
+      fillColor: getColor(locations[0].geometry.coordinates[2]),
+      radius: markerSize(locations[0].properties.mag)
+
+    })
+  )
+}
 
   // Create our map, giving it the streetmap and earthquakes layers to display on load
   var myMap = L.map("map", {
@@ -179,13 +226,7 @@ var locations = [{
   }).addTo(myMap)
 
 
-// create your custom icon
-var myIcon = L.icon({
-		iconUrl: 'https://img.icons8.com/color/48/000000/nut.png',
-		iconSize: [32, 37],
-		iconAnchor: [16, 37],
-		popupAnchor: [0, -28]
-});
+
 
 // function to get value from property "name" to populate for the popup
 function onEachFeature(feature, layer) {
@@ -193,10 +234,31 @@ function onEachFeature(feature, layer) {
 }
 
 
+
+// geojsonMarkerOptions = []
+
+// for (var i = 0; i < locations.length; i++) {
+//   geojsonMarkerOptions.push(
+//     L.circle(locations[i].feature, {
+//       color: "white",
+//       raduis: markerSize(locations[i].feature.properties.mag)
+//     })
+//   )
+// }
+
+var geojsonMarkerOptions = {
+  radius: 8,
+  fillColor: "orange",
+  color: "#000",
+  weight: 1,
+  opacity: 1,
+  fillOpacity: 0.8
+};
+
 // add geojson to the map, click on the marker to see the popup
 L.geoJSON(locations, {
 	pointToLayer: function (feature, latlng) {
-			return L.marker(latlng, {icon: myIcon});
+			return L.circleMarker(latlng, thirdMarkers);
 	},
 	onEachFeature: onEachFeature
 }).addTo(myMap);
