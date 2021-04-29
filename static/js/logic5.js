@@ -28,15 +28,15 @@ d3.json(queryUrl, function(data){
 
 markers = []  
 
-//   for (var i = 0; i < data.features.length; i++) {
-//     L.circle([lat, lng], {
-//         stroke: false,
-//         fillOpacity: .075,
-//         color: "#980043"
-//     }).addTo(myMap)
-
-//     console.log(data.features[i].properties.title)
-//   }
+  for (var i = 0; i < data.features.length; i++) {
+    lat = data.features[i].geometry.coordinates[0]
+    lng = data.features[i].geometry.coordinates[1]
+        L.circle([lat, lng], {
+        stroke: false,
+        fillOpacity: .075,
+        color: "#980043"
+    }).addTo(myMap)
+  }
 }); 
 
 
