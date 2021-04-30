@@ -1,4 +1,4 @@
-var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
+var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
 
 var myMap = L.map("map", {
     center: [37.09, -95.71],
@@ -12,7 +12,7 @@ var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}
     tileSize: 512,
     maxZoom: 18,
     zoomOffset: -1,
-    id: "mapbox/streets-v11",
+    id: "mapbox/light-v10",
     accessToken: API_KEY
   }).addTo(myMap)
 
@@ -25,7 +25,7 @@ d3.json(queryUrl, function(data){
   console.log(test)
 
  console.log(data.features[0].geometry.coordinates[0])
-//   var lng = data.features[i].geometry.coordinates[1]
+
 
 markers = []
 
@@ -47,16 +47,27 @@ function getColor(d) {
 
   for (var i = 0; i < data.features.length; i++) {
     var lng = data.features[i].geometry.coordinates[0]
-    console.log(lat)
+    var customPopup = "<h2>Location:<br>" + data.features[i].properties.place + "</h2> <hr> <h3>Magnitude: " + data.features[i].properties.mag + "</h3>"
+    var customOptions = 
+    {
+        'maxWidth': '200',
+        'width': '200',
+        'className' : 'popupCustom'
+        }
     var lat = data.features[i].geometry.coordinates[1]
         L.circleMarker([lat, lng], {
         stroke: false,
         fillOpacity: 1,
         color: getColor(data.features[i].geometry.coordinates[2]),
         radius: markerSize(data.features[i].properties.mag)
-    }).addTo(myMap)
+    }).bindPopup(customPopup, customOptions).addTo(myMap)
   }
 
+    var legend = L.control({position: 'bottomright'});
+
+    legend.onAdd - function(map)
+
+   
 
 }); 
 
