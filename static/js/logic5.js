@@ -1,9 +1,10 @@
-var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson"
+var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
 
 var myMap = L.map("map", {
     center: [37.09, -95.71],
-    zoom: 5,
+    zoom: 3,
   });
+
 
 
 var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -26,17 +27,37 @@ d3.json(queryUrl, function(data){
  console.log(data.features[0].geometry.coordinates[0])
 //   var lng = data.features[i].geometry.coordinates[1]
 
-markers = []  
+markers = []
+
+
+function markerSize(mag) {
+    return mag*1.5;
+  }
+
+
+function getColor(d) {
+    return d > 91 ? '#feebe2' :
+           d > 90  ? '#fcc5c0' :
+           d > 70  ? '#fa9fb5' :
+           d > 50  ? '#f768a1' :
+           d > 30   ? '#c51b8a' :
+           d > 10   ? '#7a0177' :
+                      '#FFEDA0';
+  }
 
   for (var i = 0; i < data.features.length; i++) {
-    lat = data.features[i].geometry.coordinates[0]
-    lng = data.features[i].geometry.coordinates[1]
-        L.circle([lat, lng], {
+    var lng = data.features[i].geometry.coordinates[0]
+    console.log(lat)
+    var lat = data.features[i].geometry.coordinates[1]
+        L.circleMarker([lat, lng], {
         stroke: false,
-        fillOpacity: .075,
-        color: "#980043"
+        fillOpacity: 1,
+        color: getColor(data.features[i].geometry.coordinates[2]),
+        radius: markerSize(data.features[i].properties.mag)
     }).addTo(myMap)
   }
+
+
 }); 
 
 
