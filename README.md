@@ -1,5 +1,5 @@
 <h4>All earthquakes within the last day ~ Information provided by USGS</h4>
- * Mapbox API Key required
+ * Mapbox API Key required in config.js
   <br>
   <br>
 
