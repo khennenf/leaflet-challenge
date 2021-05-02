@@ -13,8 +13,9 @@ html {
 
 .popupCustom .leaflet-popup-tip,
 .popupCustom .leaflet-popup-content-wrapper {
-    background: #e0e0e0;
-    color:#555;
+    background: whitesmoke;
+    color: rgb(20, 17, 1);
+    opacity: .7;
 }
 
 h2 {
@@ -25,21 +26,30 @@ h3 {
   text-align:center;
 }
 
+
 .info {
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;
-  background: white;
-  background: rgba(255,255,255,0.8);
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  color: rgb(20, 17, 1);
+  text-align: justify;
+  line-height: 20px;
+  background: whitesmoke;
+  background: whitesmoke;
+  opacity: .7;
+  box-shadow: 0 0 15px rgba(148, 134, 7, 0.2);
   border-radius: 5px;
 }
 .info h4 {
   margin: 0 0 5px;
-  color: #777;
+  color: rgb(20, 17, 1);
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  opacity: .7;
+  text-align: center
 }
 .legend {
   line-height: 18px;
-  color: #555;
+  color: rgb(20, 17, 1);
+  text-align: center
 }
 .legend i {
   width: 25px;
